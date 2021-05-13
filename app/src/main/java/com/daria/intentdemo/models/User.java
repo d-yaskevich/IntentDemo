@@ -14,7 +14,6 @@ public class User implements Serializable {
     }
 
     // getters
-
     public String getName() {
         return name;
     }

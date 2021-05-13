@@ -22,7 +22,11 @@ public class HelloActivity extends AppCompatActivity {
         String name = intent.getStringExtra(MainActivity.NAME_KEY);
 
         //show data
-        nameTV.setText("Hello, " + name + "!");
+        if (name == null || name.isEmpty()) {
+            nameTV.setText("Hello!");
+        } else {
+            nameTV.setText("Hello, " + name + "!");
+        }
     }
 
     @Override

@@ -13,10 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daria.intentdemo.models.UserMessage;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static String NAME_KEY = "NAME_KEY";
+    public static final String NAME_KEY = "NAME_KEY";
+    public static final String NUMBER_KEY = "NUMBER_KEY";
+
+    private static final int MESSAGE_REQUEST_CODE = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 //open MessageActivity
                 Intent intent = new Intent(MainActivity.this, MessageActivity.class);
-                startActivityForResult(intent, 123);
+                startActivityForResult(intent, MESSAGE_REQUEST_CODE);
             }
         });
 
@@ -68,12 +72,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 123) {
+        if (requestCode == MESSAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 //                    String name = data.getStringExtra(MessageActivity.NAME_KEY);
 //                    int age = data.getIntExtra(MessageActivity.AGE_KEY, -1);
 //                    String message = data.getStringExtra(MessageActivity.MESSAGE_KEY);
+//
+//                    messageTV.setText(name + ", " + age + ", message:\n" + message);
 
                     UserMessage userMessage = (UserMessage) data.getSerializableExtra(MessageActivity.USER_MESSAGE_KEY);
 
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Data is null", Toast.LENGTH_LONG).show();
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Canceled", Toast.LENGTH_LONG).show();
+                Snackbar.make(messageTV, "Canceled", 2000).show();
             }
         }
     }
